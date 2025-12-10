@@ -1,0 +1,181 @@
+<%- include("layout", { title: "Settings", user, body: `
+<div class="space-y-10">
+
+  <h1 class="text-3xl font-bold">TV Panel Settings</h1>
+
+  <!-- Idents / Ads -->
+  <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 space-y-4 max-w-xl">
+    <h2 class="text-xl font-semibold">Idents / Ads</h2>
+
+    <div class="space-y-2">
+      <label class="block text-sm font-medium">Ident Interval (minutes)</label>
+      <input id="ident_interval_minutes" type="number" min="0"
+        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500" />
+    </div>
+
+    <div class="space-y-2">
+      <label class="block text-sm font-medium">Ad Interval (minutes)</label>
+      <input id="ad_interval_minutes" type="number" min="0"
+        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500" />
+    </div>
+    <div class="space-y-2">
+      <label class="block text-sm font-medium">No Repeat (minutes)</label>
+      <input id="no_repeat_minutes" type="number" min="0"
+        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500" />
+    </div>
+  </div>
+
+  <!-- Media -->
+  <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 space-y-4 max-w-xl">
+    <h2 class="text-xl font-semibold">Media</h2>
+
+    <div class="space-y-2">
+      <label class="block text-sm font-medium">Media Folder Path (e.g. ./media)</label>
+      <input id="media_dir" type="text"
+        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500" />
+    </div>
+  </div>
+
+  <!-- Video Output Settings -->
+  <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 space-y-4 max-w-xl">
+    <h2 class="text-xl font-semibold">Video Output Settings</h2>
+
+    <div class="space-y-2">
+      <label class="block text-sm font-medium">FPS</label>
+      <select id="default_fps"
+        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500">
+        <option value="24">24</option>
+        <option value="25">25</option>
+        <option value="30">30</option>
+        <option value="50">50</option>
+        <option value="60">60</option>
+      </select>
+    </div>
+
+    <div class="space-y-2">
+      <label class="block text-sm font-medium">Resolution</label>
+      <select id="default_resolution"
+        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500">
+        <option value="854x480">854×480</option>
+        <option value="1280x720">1280×720</option>
+        <option value="1920x1080">1920×1080</option>
+      </select>
+    </div>
+
+    <div class="space-y-2">
+      <label class="block text-sm font-medium">Video Bitrate</label>
+      <select id="bitrate_video"
+        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500">
+        <option value="1500k">1500k</option>
+        <option value="2500k">2500k</option>
+        <option value="5000k">5000k</option>
+        <option value="8000k">8000k</option>
+      </select>
+    </div>
+
+    <div class="space-y-2">
+      <label class="block text-sm font-medium">Audio Bitrate</label>
+      <select id="bitrate_audio"
+        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500">
+        <option value="96k">96k</option>
+        <option value="128k">128k</option>
+        <option value="160k">160k</option>
+        <option value="192k">192k</option>
+      </select>
+    </div>
+
+    <div class="space-y-2">
+      <label class="block text-sm font-medium">Video Buffer Size</label>
+      <select id="buffer_size"
+        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500">
+        <option value="5000k">5000k</option>
+        <option value="10000k">10000k</option>
+        <option value="20000k">20000k</option>
+      </select>
+    </div>
+
+    <div class="space-y-2">
+      <label class="block text-sm font-medium">Logo</label>
+      <input id="logo" type="file"
+        class="w-full text-gray-200 file:bg-pink-600 file:text-white file:rounded-md file:border-0 file:px-4 file:py-2 file:hover:bg-pink-700" />
+    </div>
+  </div>
+
+  <!-- Output Stream -->
+  <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 space-y-4 max-w-xl">
+    <h2 class="text-xl font-semibold">Output Stream</h2>
+
+    <div class="space-y-2">
+      <label class="block text-sm font-medium">RTMP Output URL</label>
+      <input id="output_rtmp_url" type="text"
+        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500" />
+    </div>
+  </div>
+
+  <button onclick="saveSettings()"
+    class="px-5 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-md transition">
+    Save Settings
+  </button>
+
+  <div id="status" class="mt-4 text-lg"></div>
+
+  <script>
+async function loadSettings() {
+  const res = await fetch("/api/settings");
+  const data = await res.json();
+  if (!data.ok) return;
+
+  const s = data.settings;
+  document.getElementById("ident_interval_minutes").value = s.ident_interval_minutes || "";
+  document.getElementById("ad_interval_minutes").value = s.ad_interval_minutes || "";
+  document.getElementById("no_repeat_minutes").value = s.no_repeat_minutes || "";
+  document.getElementById("media_dir").value = s.media_dir || "";
+  document.getElementById("default_fps").value = s.default_fps || "";
+  document.getElementById("default_resolution").value = s.default_resolution || "";
+  document.getElementById("bitrate_video").value = s.bitrate_video || "";
+  document.getElementById("bitrate_audio").value = s.bitrate_audio || "";
+  document.getElementById("buffer_size").value = s.buffer_size || "";
+  document.getElementById("output_rtmp_url").value = s.output_rtmp_url || "";
+}
+
+async function saveSettings() {
+  const form = new FormData();
+
+  form.append("ident_interval_minutes", document.getElementById("ident_interval_minutes").value);
+  form.append("ad_interval_minutes", document.getElementById("ad_interval_minutes").value);
+  form.append("no_repeat_minutes", document.getElementById("no_repeat_minutes").value);
+  form.append("media_dir", document.getElementById("media_dir").value);
+  form.append("default_fps", document.getElementById("default_fps").value);
+  form.append("default_resolution", document.getElementById("default_resolution").value);
+  form.append("bitrate_video", document.getElementById("bitrate_video").value);
+  form.append("bitrate_audio", document.getElementById("bitrate_audio").value);
+  form.append("buffer_size", document.getElementById("buffer_size").value);
+  form.append("output_rtmp_url", document.getElementById("output_rtmp_url").value);
+
+  const logoInput = document.getElementById("logo");
+  if (logoInput.files.length > 0) {
+    form.append("logo", logoInput.files[0]);
+  }
+
+  const res = await fetch("/api/settings", {
+    method: "POST",
+    body: form
+  });
+
+  const data = await res.json();
+  const status = document.getElementById("status");
+
+  if (data.ok) {
+    status.innerText = "Saved successfully!";
+    status.style.color = "lightgreen";
+  } else {
+    status.innerText = "Error saving settings.";
+    status.style.color = "red";
+  }
+}
+
+loadSettings();
+  </script>
+
+</div>
+` }) %>

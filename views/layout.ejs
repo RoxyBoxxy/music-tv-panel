@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html class="h-full bg-gray-900 text-gray-100">
+<head>
+  <meta charset="utf-8" />
+  <title><%= title || "Music TV Panel" %></title>
+  <link rel="stylesheet" href="/public/styles.css">
+  <link href="https://vjs.zencdn.net/8.23.4/video-js.css" rel="stylesheet" />
+  <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.1/dist/flowbite.min.js"></script>
+
+<script>
+  MicroModal.init();
+</script>
+</head>
+
+<body class="min-h-full flex flex-col">
+
+  <!-- Top Navigation Bar -->
+  <header class="bg-gray-800 border-b border-gray-700 px-6 py-3 flex items-center justify-between">
+    <div class="text-lg font-semibold flex items-center gap-2">
+      🎵 <span>Music TV Panel</span>
+    </div>
+
+    <% if (user) { %>
+    <nav class="flex items-center gap-4">
+      <a href="/" class="hover:text-pink-400 transition">Dashboard</a>
+      <a href="/media" class="hover:text-pink-400 transition">Media</a>
+      <a href="/playlists" class="hover:text-pink-400 transition">Playlists</a>
+      <a href="/users" class="hover:text-pink-400 transition">Users</a>
+      <a href="/settings" class="hover:text-pink-400 transition">Settings</a>
+    </nav>
+
+    <form method="post" action="/logout">
+      <button type="submit"
+        class="ml-4 px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded-md transition">
+        Logout (<%= user.username %>)
+      </button>
+    </form>
+    <% } %>
+  </header>
+
+  <!-- Main Body -->
+  <main class="flex-1 p-6">
+    <%- body %>
+  </main>
+
+</body>
+<footer>
+  <script src="https://vjs.zencdn.net/8.23.4/video.min.js"></script>
+</footer>
+</html>

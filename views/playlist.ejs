@@ -1,0 +1,28 @@
+<%- include("layout", { title: "Playlist Editor", user, body: `
+<div class="space-y-8">
+
+  <section class="space-y-4 max-w-3xl">
+    <h1 class="text-3xl font-bold">Playlist Editor</h1>
+
+    <p class="text-gray-300">Editing playlist ID: ${playlistId}</p>
+
+    <!-- Drag & Drop Playlist List -->
+    <ul id="playlist"
+      class="space-y-2">
+      <!-- playlist.js will populate li items -->
+    </ul>
+
+    <button id="save"
+      class="px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded transition">
+      Save Order
+    </button>
+  </section>
+
+  <script>
+    const playlistId = "${playlistId}";
+  </script>
+
+  <script src="/public/playlist.js"></script>
+
+</div>
+` }) %>

@@ -1,0 +1,92 @@
+<%- include("layout", { title: "Dashboard" , user, body: ` <div class="space-y-10">
+
+  <!-- Dashboard Title -->
+  <section class="space-y-3">
+    <h1 class="text-3xl font-bold">Dashboard</h1>
+
+    <div class="space-y-4">
+      <h2 class="text-xl font-semibold">Live Stream Preview</h2>
+      <video-js id=vid1 width=600 height=300 class="vjs-default-skin" controls>
+        <source src="/public/hls/index.m3u8" type="application/x-mpegURL">
+      </video-js>
+      <!-- "core" version of Video.js -->
+      <script src="https://vjs.zencdn.net/8.23.4/video.min.js"></script>
+      <script src="https://app.unpkg.com/@videojs/http-streaming@3.17.2/files/dist/videojs-http-streaming.min.js"></script>
+      <script>
+        var player = videojs('vid1');
+        player.play();
+      </script>
+
+
+      <p class="text-gray-300">
+        Add videos via
+        <a href="/add" class="text-pink-400 hover:text-pink-300 underline">Add Video</a>
+        to start filling the library.
+      </p>
+    </div>
+  </section>
+
+  <!-- Now Playing -->
+  <section class="space-y-3">
+    <h2 class="text-xl font-semibold">Now Playing</h2>
+    <pre id="nowPlaying" class="p-4 bg-gray-800 border border-gray-700 rounded text-sm overflow-auto">Loading…</pre>
+  </section>
+
+  <!-- Playlists -->
+  <section class="space-y-4">
+    <h2 class="text-xl font-semibold">Playlists</h2>
+
+    <div id="playlists" class="space-y-2"></div>
+
+    <form id="newPlaylistForm" class="space-y-3 max-w-md">
+      <input type="text" name="name" placeholder="New playlist name" required
+        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500" />
+
+      <input type="text" name="description" placeholder="Description (optional)"
+        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500" />
+
+      <button type="submit" class="px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded transition">
+        Add Playlist
+      </button>
+    </form>
+  </section>
+
+  
+  <script>
+    // Dialog helpers for dashboard.js
+    const videoModal = document.getElementById("videoModal");
+    const videoModalTitle = document.getElementById("videoModalTitle");
+    const videoModalContent = document.getElementById("videoModalContent");
+    const videoModalCancel = document.getElementById("videoModalCancel");
+    const videoModalConfirm = document.getElementById("videoModalConfirm");
+
+    window.openVideoModal = (title, contentHTML, confirmCallback) => {
+      videoModalTitle.textContent = title;
+      videoModalContent.innerHTML = contentHTML;
+
+      function cleanup() {
+        videoModalConfirm.removeEventListener("click", onConfirm);
+        videoModalCancel.removeEventListener("click", onCancel);
+      }
+
+      function onConfirm() {
+        confirmCallback();
+        cleanup();
+        videoModal.close();
+      }
+
+      function onCancel() {
+        cleanup();
+        videoModal.close();
+      }
+
+      videoModalConfirm.addEventListener("click", onConfirm);
+      videoModalCancel.addEventListener("click", onCancel);
+
+      videoModal.showModal();
+    };
+  </script>
+  <script src="/public/dashboard.js"></script>
+
+  </div>
+  ` }) %>

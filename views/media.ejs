@@ -1,0 +1,157 @@
+<%- include("layout", { title: "Media" , user, body: ` <div class="space-y-10">
+
+  <!-- Dashboard Title -->
+  <section class="space-y-3">
+    <h1 class="text-3xl font-bold">Media</h1>
+    <form id="addForm" class="space-y-4">
+
+      <div>
+        <label class="block text-sm font-medium mb-1">YouTube URL</label>
+        <input type="url" name="url" id="url" required
+          placeholder="https://www.youtube.com/watch?v=... or Playlist"
+          class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500 focus:outline-none" />
+      </div>
+
+      <button type="submit"
+        class="px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded transition">
+        Add
+      </button>
+    </form>
+    <!-- Add Video Status Modal -->
+    <dialog id="addStatusModal"
+      class="backdrop:bg-black backdrop:bg-opacity-70 rounded-lg p-6 bg-gray-800 text-gray-100 w-[500px] border border-gray-700"
+      style="margin:auto;">
+
+      <h3 class="text-xl font-bold mb-4">Adding Videos…</h3>
+
+      <pre id="addStatus"
+        class="p-4 bg-gray-800 border border-gray-700 rounded text-sm overflow-auto h-60"></pre>
+
+      <div class="flex justify-end mt-4">
+        <button id="addStatusClose"
+          class="px-4 py-2 bg-pink-600 hover:bg-pink-700 rounded text-white">
+          Close
+        </button>
+      </div>
+    </dialog>
+  </section>
+
+
+  <!-- Videos -->
+  <section class="space-y-4">
+    <h2 class="text-xl font-semibold">Videos</h2>
+
+    <!-- Native dialog modal -->
+    <dialog id="videoModal"
+      class="backdrop:bg-black backdrop:bg-opacity-70 rounded-lg p-6 bg-gray-800 text-gray-100 w-[400px] border border-gray-700 hidden"
+      style="display:none;">
+      <h3 id="videoModalTitle" class="text-xl font-bold mb-4">Modal</h3>
+
+      <div id="videoModalContent" class="text-gray-200 mb-6">
+        <!-- JS injects edit/delete content here -->
+      </div>
+
+      <div class="flex justify-end gap-3">
+        <button id="videoModalCancel" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">Cancel</button>
+
+        <button id="videoModalConfirm" class="px-4 py-2 bg-pink-600 hover:bg-pink-700 rounded">Confirm</button>
+      </div>
+    </dialog>
+
+    <div class="overflow-x-auto">
+      <table id="videosTable" class="min-w-full border border-gray-700 rounded text-sm">
+        <thead class="bg-gray-800">
+          <tr>
+            <th class="px-3 py-2 border border-gray-700">ID</th>
+            <th class="px-3 py-2 border border-gray-700">Title</th>
+            <th class="px-3 py-2 border border-gray-700">Artist</th>
+            <th class="px-3 py-2 border border-gray-700">Year</th>
+            <th class="px-3 py-2 border border-gray-700">Genre</th>
+            <th class="px-3 py-2 border border-gray-700">Ident?</th>
+            <th class="px-3 py-2 border border-gray-700">Source</th>
+            <th class="px-3 py-2 border border-gray-700">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="videosTableBody" class="divide-y divide-gray-800">
+          <!-- dashboard.js will populate rows like:
+          <tr>
+            <td>1</td>
+            <td>Song title</td>
+            <td>Artist</td>
+            <td>2024</td>
+            <td>Pop</td>
+            <td>No</td>
+            <td>YouTube</td>
+            <td class="px-3 py-2 flex gap-2">
+              <button data-id="1" class="editBtn px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm">Edit</button>
+              <button data-id="1" class="deleteBtn px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-sm">Delete</button>
+            </td>
+          </tr>
+          -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Modal Lightbox -->
+  <div id="modalOverlay" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+
+    <div id="modalBox" class="bg-gray-800 border border-gray-700 rounded-lg p-6 w-full max-w-lg shadow-xl">
+
+      <h2 id="modalTitle" class="text-2xl font-bold mb-4">Modal</h2>
+
+      <div id="modalContent" class="text-gray-200 mb-6">
+        <!-- dashboard.js will inject form or confirmation UI here -->
+      </div>
+
+      <div class="flex justify-end gap-3">
+        <button id="modalCancel" class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded">
+          Cancel
+        </button>
+
+        <button id="modalConfirm" class="px-4 py-2 bg-pink-600 hover:bg-pink-700 text-white rounded">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Dialog helpers for dashboard.js
+    const videoModal = document.getElementById("videoModal");
+    const videoModalTitle = document.getElementById("videoModalTitle");
+    const videoModalContent = document.getElementById("videoModalContent");
+    const videoModalCancel = document.getElementById("videoModalCancel");
+    const videoModalConfirm = document.getElementById("videoModalConfirm");
+
+    window.openVideoModal = (title, contentHTML, confirmCallback) => {
+      videoModalTitle.textContent = title;
+      videoModalContent.innerHTML = contentHTML;
+
+      function cleanup() {
+        videoModalConfirm.removeEventListener("click", onConfirm);
+        videoModalCancel.removeEventListener("click", onCancel);
+      }
+
+      function onConfirm() {
+        confirmCallback();
+        cleanup();
+        videoModal.close();
+      }
+
+      function onCancel() {
+        cleanup();
+        videoModal.close();
+      }
+
+      videoModalConfirm.addEventListener("click", onConfirm);
+      videoModalCancel.addEventListener("click", onCancel);
+
+      videoModal.showModal();
+    };
+  </script>
+  <script src="/public/media.js"></script>
+  <script src="/public/add.js"></script>
+
+  </div>
+  ` }) %>
