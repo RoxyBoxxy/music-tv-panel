@@ -93,7 +93,7 @@ The scheduler:
 
 - Picks videos from the DB
 - Writes a concat playlist and nowplaying.txt
-- Spawns ffmpeg to output HLS segments + `stream.m3u8` into `./public/hls`
+- Spawns ffmpeg to output HLS segments + `stream.m3u8` into `./public/hls` and stream to external rtmp server
 
 Access stream at:
 
