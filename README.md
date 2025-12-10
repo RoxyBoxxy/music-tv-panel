@@ -93,7 +93,7 @@ The scheduler:
 
 - Picks videos from the DB
 - Writes a concat playlist and nowplaying.txt
-- Spawns ffmpeg to output HLS segments + `stream.m3u8` into `./hls`
+- Spawns ffmpeg to output HLS segments + `stream.m3u8` into `./public/hls`
 
 Access stream at:
 
@@ -109,3 +109,4 @@ http://your-server:4456/public/hls/stream.m3u8
   - Strong `SESSION_SECRET`
   - Reverse proxy (nginx) in front
   - IP/VPN restriction for admin access
+- Port 554/UDP must be free in order for ffmpeg to pass video
