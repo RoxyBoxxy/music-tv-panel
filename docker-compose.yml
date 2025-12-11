@@ -1,0 +1,10 @@
+services:
+  fluxtv:
+    build: .
+    container_name: FluxTV
+    ports:
+      - "4456:4456"
+    volumes:
+      - ./media:/app/media
+    environment:
+      NODE_ENV: production
