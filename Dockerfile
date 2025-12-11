@@ -115,7 +115,6 @@ COPY engine ./engine
 COPY db ./db
 COPY libs ./libs
 COPY public ./public
-COPY uploads ./uploads
 COPY media ./media
 COPY overlay ./overlay
 COPY views ./views
