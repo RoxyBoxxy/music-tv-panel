@@ -1,3 +1,9 @@
+![License](https://img.shields.io/github/license/roxsquires/music-tv-panel?style=for-the-badge)
+![Stars](https://img.shields.io/github/stars/roxsquires/music-tv-panel?style=for-the-badge)
+![Node Version](https://img.shields.io/badge/node-18%2B-green?style=for-the-badge&logo=node.js&logoColor=white)
+![FFmpeg](https://img.shields.io/badge/FFmpeg-enabled-brightgreen?style=for-the-badge&logo=ffmpeg&logoColor=white)
+![Dependencies](https://img.shields.io/librariesio/github/roxsquires/music-tv-panel?style=for-the-badge)
+
 # Music TV Panel (yt-dlp + sqlite3)
 
 Music TV Panel is a professional-grade, fully automated music-video broadcasting and scheduling system inspired by classic music TV channels like Kerrang!, Scuzz, and MTV2.
