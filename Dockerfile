@@ -72,7 +72,6 @@ RUN cd ffmpeg && ./configure \
     --enable-libsoxr \
     --enable-openssl \
     --enable-libwebp \
-    --enable-postproc \
     --enable-avfilter \
     --enable-libzimg \
     --enable-libzvbi \
