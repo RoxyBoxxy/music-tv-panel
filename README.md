@@ -1,8 +1,8 @@
-![License](https://img.shields.io/github/license/rRoxyBoxxy/music-tv-panel?style=for-the-badge)
-![Stars](https://img.shields.io/github/stars/rRoxyBoxxy/music-tv-panel?style=for-the-badge)
+![License](https://img.shields.io/github/license/RoxyBoxxy/music-tv-panel?style=for-the-badge)
+![Stars](https://img.shields.io/github/stars/RoxyBoxxy/music-tv-panel?style=for-the-badge)
 ![Node Version](https://img.shields.io/badge/node-18%2B-green?style=for-the-badge&logo=node.js&logoColor=white)
 ![FFmpeg](https://img.shields.io/badge/FFmpeg-enabled-brightgreen?style=for-the-badge&logo=ffmpeg&logoColor=white)
-![Dependencies](https://img.shields.io/librariesio/github/rRoxyBoxxy/music-tv-panel?style=for-the-badge)
+![Dependencies](https://img.shields.io/librariesio/github/RoxyBoxxy/music-tv-panel?style=for-the-badge)
 
 # Music TV Panel (yt-dlp + sqlite3)
 
