@@ -135,4 +135,4 @@ rtmp://your-server/mount
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=RoxyBoxxy/music-tv-panel&type=date&legend=top-left)](https://www.star-history.com/#RoxyBoxxy/FluxTV&type=date&legend=top-left)
+[![Star History Chart](https://api.star-history.com/svg?repos=RoxyBoxxy/FluxTV&type=date&legend=top-left)](https://www.star-history.com/#RoxyBoxxy/FluxTV&type=date&legend=top-left)
