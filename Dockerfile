@@ -29,7 +29,6 @@ RUN apt-get update && apt-get install -y \
     libzimg-dev \
     libzvbi-dev \
     libspeex-dev \
-    libfdk-aac-dev \
     nasm \
     ninja-build \
     pkg-config \
@@ -43,6 +42,14 @@ RUN apt-get update && apt-get install -y \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
+
+# Build fdk-aac (required for --enable-libfdk-aac)
+RUN git clone https://github.com/mstorsjo/fdk-aac.git && \
+    cd fdk-aac && \
+    autoreconf -fiv && \
+    ./configure --enable-shared=no --enable-static=yes && \
+    make -j$(nproc) && \
+    make install
 
 # Clone FFmpeg 8.x
 RUN git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg && \
