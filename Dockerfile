@@ -47,49 +47,46 @@ RUN git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg && \
 
 # Configure full-feature FFmpeg build
 RUN cd ffmpeg && ./configure \
-    --enable-gpl \
-    --enable-version3 \
-    --enable-nonfree \
-    --enable-static \
-    --disable-shared \
-    --disable-debug \
-    --disable-doc \
-    --disable-ffplay \
-    --enable-libx264 \
-    --enable-libx265 \
-    --enable-libvpx \
-    --enable-libfdk-aac \
-    --enable-libmp3lame \
-    --enable-libopus \
-    --enable-libvorbis \
-    --enable-libtheora \
-    --enable-libass \
-    --enable-libfreetype \
-    --enable-libfribidi \
-    --enable-libbluray \
-    --enable-libaom \
-    --enable-libsvtav1 \
-    --enable-libsoxr \
-    --enable-openssl \
-    --enable-libwebp \
-    --enable-avfilter \
-    --enable-libzimg \
-    --enable-libzvbi \
-    --enable-libspeex \
-    --enable-filters \
-    --enable-encoder=all \
-    --enable-decoder=all \
-    --enable-muxer=all \
-    --enable-demuxer=all \
-    --enable-parser=all \
-    --enable-protocol=all \
-    --enable-bsf=all \
-    --enable-indev=all \
-    --enable-outdev=all
+  --enable-gpl \
+  --enable-version3 \
+  --enable-nonfree \
+  --enable-static \
+  --disable-shared \
+  --disable-debug \
+  --disable-doc \
+  --disable-ffplay \
+  --enable-libx264 \
+  --enable-libx265 \
+  --enable-libfdk-aac \
+  --enable-libmp3lame \
+  --enable-libopus \
+  --enable-libvorbis \
+  --enable-libass \
+  --enable-libfreetype \
+  --enable-libfribidi \
+  --enable-libbluray \
+  --enable-libaom \
+  --enable-libsvtav1 \
+  --enable-libsoxr \
+  --enable-libwebp \
+  --enable-libzimg \
+  --enable-libzvbi \
+  --enable-libspeex \
+  --enable-filters \
+  --enable-avfilter \
+  --enable-protocol=all \
+  --enable-encoder=all \
+  --enable-decoder=all \
+  --enable-muxer=all \
+  --enable-demuxer=all \
+  --enable-parser=all \
+  --enable-bsf=all \
+  --enable-indev=all \
+  --enable-outdev=all
 
 RUN cd ffmpeg && make -j$(nproc)
 
-
+RUN apt-get update && apt-get install -y fonts-dejavu-core
 # -----------------------------
 # STAGE 2 — Final Node runtime
 # -----------------------------
