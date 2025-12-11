@@ -127,6 +127,22 @@ FROM node:20-bookworm
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y \
+    libass9 \
+    libfreetype6 \
+    libfribidi0 \
+    libvorbis0a \
+    libopus0 \
+    libmp3lame0 \
+    libvpx7 \
+    libwebp7 \
+    libzimg2 \
+    libzvbi0 \
+    libbluray2 \
+    libaom3 \
+    libsoxr0 \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Copy FFmpeg + FFprobe
 COPY --from=ffmpeg-build /build/ffmpeg/ffmpeg /usr/local/bin/ffmpeg
 COPY --from=ffmpeg-build /build/ffmpeg/ffprobe /usr/local/bin/ffprobe
