@@ -30,6 +30,8 @@ RUN apt-get update && apt-get install -y \
     libzimg-dev \
     libzvbi-dev \
     libspeex-dev \
+    libfontconfig1-dev \
+    libharfbuzz-dev \
     nasm \
     ninja-build \
     pkg-config \
@@ -83,6 +85,8 @@ RUN cd ffmpeg && ./configure \
   --enable-libvorbis \
   --enable-libass \
   --enable-libfreetype \
+  --enable-libfontconfig \
+  --enable-libharfbuzz \
   --enable-libfribidi \
   --enable-libbluray \
   --enable-libaom \
@@ -91,7 +95,6 @@ RUN cd ffmpeg && ./configure \
   --enable-libwebp \
   --enable-libzimg \
   --enable-libzvbi \
-  --enable-libspeex \
   --enable-filters \
   --enable-avfilter \
   --enable-protocol=all \
@@ -132,6 +135,8 @@ RUN apt-get update && apt-get install -y \
     libfreetype6 \
     libfribidi0 \
     libvorbis0a \
+    libvorbisenc2 \
+    libvorbisfile3 \
     libopus0 \
     libmp3lame0 \
     libvpx7 \
@@ -141,13 +146,36 @@ RUN apt-get update && apt-get install -y \
     libbluray2 \
     libaom3 \
     libsoxr0 \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get clean && rm -rf /var/lib/apt/lists/*ßß
+
+# Copy all runtime shared libraries from the build stage
+COPY --from=ffmpeg-build /usr/local/lib/*.so* /usr/local/lib/
+COPY --from=ffmpeg-build /usr/lib/*linux-gnu/*.so* /usr/local/lib/
+RUN ldconfig
 
 # Copy FFmpeg + FFprobe
 COPY --from=ffmpeg-build /build/ffmpeg/ffmpeg /usr/local/bin/ffmpeg
 COPY --from=ffmpeg-build /build/ffmpeg/ffprobe /usr/local/bin/ffprobe
+COPY --from=ffmpeg-build /usr/lib/*linux-gnu/*.so* /usr/local/lib/
+RUN ldconfig
 
 RUN chmod +x /usr/local/bin/ffmpeg /usr/local/bin/ffprobe && ffmpeg -version
+
+# Sanity check: ensure all FFmpeg dependencies exist
+RUN echo "Checking FFmpeg shared library dependencies:" && \
+    ldd /usr/local/bin/ffmpeg
+
+ARG TARGETARCH
+RUN echo "Installing yt-dlp for architecture: ${TARGETARCH}" && \
+    if [ "$TARGETARCH" = "amd64" ]; then \
+        curl -L -o /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux; \
+    elif [ "$TARGETARCH" = "arm64" ]; then \
+        curl -L -o /usr/local/bin/yt-dlp https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux_aarch64; \
+    else \
+        echo "Unsupported architecture: $TARGETARCH" && exit 1; \
+    fi && \
+    chmod +x /usr/local/bin/yt-dlp && \
+    yt-dlp --version
 
 # Copy package files
 COPY package*.json ./
@@ -167,9 +195,12 @@ COPY server.js .
 COPY logo.png .
 COPY postcss.config.js .
 COPY tailwind.config.js .
+COPY entrypoint.sh .
+
+RUN chmod +x entrypoint.sh
 
 # Expose port (tell me which one your project uses)
 EXPOSE 4456
 
 # Start command — update if needed
-CMD ["node", "server.js"]
+CMD ["bash", "entrypoint.sh"]

@@ -27,10 +27,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser(SESSION_SECRET));
 
-app.use(checkUserSetup);
-
 app.use("/public", express.static("public"));
 app.use("/hls", express.static("hls"));
+
+app.use(checkUserSetup);
+
 
 const upload = multer({ dest: "uploads/" });
 

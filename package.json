@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev:css": "tailwindcss -i ./public/tailwind.css -o ./public/styles.css --watch"
+    "dev:css": "tailwindcss -i ./public/tailwind.css -o ./public/styles.css"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -16,6 +16,7 @@
     "flowbite": "^4.0.1",
     "jsonwebtoken": "^9.0.3",
     "multer": "^2.0.2",
+    "node-fetch": "^3.3.2",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   },
