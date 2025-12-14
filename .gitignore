@@ -142,4 +142,4 @@ media/*/*.mp4
 db/panel.sqlite
 db/panel.sqlite-shm
 db/panel.sqlite-wal
-overlay/*
+overlay/*.txt
