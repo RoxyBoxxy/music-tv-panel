@@ -2,7 +2,7 @@ name: Build & Push to GHCR (Multi-Arch)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
   workflow_dispatch:
 
 jobs:

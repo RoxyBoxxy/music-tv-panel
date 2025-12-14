@@ -35,7 +35,7 @@ Below is a quick overview of what features are currently **working** and which a
 | Video storage (media/Artist/)    | ✅ Working       | Filename auto‑sanitised. |
 | SQLite database integration      | ✅ Working       | Stores title, artist, year, genre, path, ident flag, etc. |
 | Media page pagination            | ❌ Not implemented | 25 items per page, server‑side filters. |
-| Search + filters                 | ❌ Not implemented | Search by title/artist/year/genre + Ident filter. |
+| Search + filters                 | ✅ Working       | Search by title/artist/year/genre. |
 | Live import log streaming        | ✅ Working       | Uses chunked responses to update modal in real time. |
 | Now Playing overlay in ffmpeg    | ✅ Working       | Basic text works; advanced animation Not implemented. |
 | Logo overlay (PNG)               | ✅ Working       | Uses ffmpeg filter_complex. |
