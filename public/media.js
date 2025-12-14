@@ -64,7 +64,6 @@ async function loadVideos(page = 1) {
           </label>
                     <button id="modalGrab" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded text-sm">Grab Metadata</button>
 
-          <button id="modalGrab" class="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white rounded text-sm">Grab Metadata</button>
         </div>
       `;
 
