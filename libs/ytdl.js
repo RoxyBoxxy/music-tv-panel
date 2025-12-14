@@ -2,14 +2,46 @@ import { spawn } from "child_process";
 import path from "path";
 import fs from "fs";
 import dbPromise from "./db.js";
+
+async function getYtdlpCookieArgs() {
+  try {
+    const db = await dbPromise;
+    const row = await db.get(
+      "SELECT value FROM settings WHERE key = ?",
+      "ytd_cookies_path"
+    );
+
+    if (row && row.value && fs.existsSync(row.value)) {
+      return ["--cookies", row.value];
+    }
+  } catch (e) {
+    console.warn("yt-dlp cookie lookup failed:", e.message);
+  }
+  return [];
+}
+
 import { fetchYearAndGenre } from "./metaFetch.js";
 
 const MEDIA_ROOT = process.env.MEDIA_ROOT || "./media";
 const YTDLP_BIN = process.env.YTDLP_BIN || "yt-dlp";
 
+const YTDLP_HARDEN_ARGS = [
+  "--user-agent",
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+  "--sleep-interval", "1",
+  "--max-sleep-interval", "5"
+];
+
 function runYtDlp(args) {
-  return new Promise((resolve, reject) => {
-    const proc = spawn(YTDLP_BIN, args, { stdio: ["ignore", "pipe", "pipe"] });
+  return new Promise(async (resolve, reject) => {
+    const cookieArgs = await getYtdlpCookieArgs();
+    const proc = spawn(
+      YTDLP_BIN,
+      [...YTDLP_HARDEN_ARGS, ...cookieArgs, ...args],
+      {
+        stdio: ["ignore", "pipe", "pipe"]
+      }
+    );
     let stdout = "";
     let stderr = "";
     proc.stdout.on("data", (d) => (stdout += d.toString()));
@@ -91,8 +123,15 @@ export async function addVideoFromUrl(url, callbacks = {}) {
   } = callbacks;
 
   function streamYtDlp(args) {
-    return new Promise((resolve, reject) => {
-      const proc = spawn(YTDLP_BIN, args, { stdio: ["ignore", "pipe", "pipe"] });
+    return new Promise(async (resolve, reject) => {
+      const cookieArgs = await getYtdlpCookieArgs();
+      const proc = spawn(
+        YTDLP_BIN,
+        [...YTDLP_HARDEN_ARGS, ...cookieArgs, ...args],
+        {
+          stdio: ["ignore", "pipe", "pipe"]
+        }
+      );
 
       proc.stdout.on("data", (d) => {
         const text = d.toString();

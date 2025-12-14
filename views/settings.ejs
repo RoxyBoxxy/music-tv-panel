@@ -36,6 +36,96 @@
     </div>
   </div>
 
+  <!-- YouTube Authentication -->
+  <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 space-y-4 max-w-xl">
+    <h2 class="text-xl font-semibold">YouTube Authentication</h2>
+
+    <p class="text-sm text-gray-300">
+      Some YouTube videos require a logged-in session.
+      FluxTV does <strong>not</strong> store your password.
+      Upload a cookies.txt file exported from your browser.
+    </p>
+
+    <div class="space-y-2">
+      <label class="block text-sm font-medium">cookies.txt file</label>
+      <input id="ytd_cookies_file" type="file" accept=".txt"
+        class="w-full text-gray-200 file:bg-purple-600 file:text-white
+               file:rounded-md file:border-0 file:px-4 file:py-2
+               file:hover:bg-purple-700" />
+    </div>
+
+    <div class="flex flex-wrap gap-3">
+      <button type="button" onclick="uploadYtdCookies()"
+        class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-md transition">
+        Upload Cookies
+      </button>
+
+      <button type="button" onclick="testYtdCookies()"
+        class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md transition">
+        Test Authentication
+      </button>
+
+      <button type="button" onclick="openYtdHelp()"
+        class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-md border border-gray-600 transition">
+        Help
+      </button>
+    </div>
+
+    <div id="ytd_cookie_status" class="text-sm"></div>
+    <dialog id="ytd_help_modal" class="bg-transparent">
+      <div class="w-full max-w-2xl bg-gray-900 text-gray-100 rounded-lg border border-gray-700 shadow-xl p-6">
+        <div class="flex items-start justify-between gap-4">
+          <h3 class="text-lg font-semibold">How to export YouTube cookies</h3>
+          <button type="button" onclick="closeYtdHelp()"
+            class="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 rounded border border-gray-600">
+            Close
+          </button>
+        </div>
+
+        <div class="mt-4 space-y-4 text-sm text-gray-200">
+          <p>
+            YouTube sometimes blocks downloads unless you have a logged-in browser session.
+            FluxTV does <strong>not</strong> store your password — it only uses a cookies.txt file you export.
+          </p>
+
+          <div class="bg-gray-800 border border-gray-700 rounded p-4 space-y-3">
+            <h4 class="font-semibold">Firefox (recommended)</h4>
+            <ol class="list-decimal pl-5 space-y-1">
+              <li>Install the <strong>cookies.txt</strong> extension from Firefox Add-ons.</li>
+              <li>Open <strong>youtube.com</strong> and make sure you are logged in.</li>
+              <li>Click the extension icon and export cookies for <strong>youtube.com</strong>.</li>
+              <li>Save the file as <code class="px-1 bg-black/40 rounded">cookies.txt</code>.</li>
+              <li>Back here: click <strong>Upload Cookies</strong>, then <strong>Test Authentication</strong>.</li>
+            </ol>
+          </div>
+
+          <div class="bg-gray-800 border border-gray-700 rounded p-4 space-y-3">
+            <h4 class="font-semibold">Chrome / Chromium</h4>
+            <ol class="list-decimal pl-5 space-y-1">
+              <li>Install a <strong>cookies.txt exporter</strong> extension (e.g. “Get cookies.txt”).</li>
+              <li>Open <strong>youtube.com</strong> and make sure you are logged in.</li>
+              <li>Export cookies for <strong>youtube.com</strong> and save as <code class="px-1 bg-black/40 rounded">cookies.txt</code>.</li>
+              <li>Back here: click <strong>Upload Cookies</strong>, then <strong>Test Authentication</strong>.</li>
+            </ol>
+          </div>
+
+          <div class="bg-gray-800 border border-gray-700 rounded p-4 space-y-2">
+            <h4 class="font-semibold">Troubleshooting</h4>
+            <ul class="list-disc pl-5 space-y-1 text-gray-300">
+              <li>If Test Authentication fails, re-export cookies and try again.</li>
+              <li>If you log out of YouTube, cookies stop working (re-export them).</li>
+              <li>Keep cookies private — treat them like a password.</li>
+            </ul>
+          </div>
+
+          <p class="text-xs text-gray-400">
+            This uses yt-dlp’s official cookie support. Docs: <span class="underline">https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp</span>
+          </p>
+        </div>
+      </div>
+    </dialog>
+  </div>
+
   <!-- Video Output Settings -->
   <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 space-y-4 max-w-xl">
     <h2 class="text-xl font-semibold">Video Output Settings</h2>
@@ -173,6 +263,75 @@ async function saveSettings() {
     status.style.color = "red";
   }
 }
+
+async function uploadYtdCookies() {
+  const fileInput = document.getElementById("ytd_cookies_file");
+  const status = document.getElementById("ytd_cookie_status");
+
+  if (!fileInput.files.length) {
+    status.textContent = "Please select a cookies.txt file.";
+    status.style.color = "orange";
+    return;
+  }
+
+  const form = new FormData();
+  form.append("cookies", fileInput.files[0]);
+
+  const res = await fetch("/api/ytdlp/cookies", {
+    method: "POST",
+    body: form
+  });
+
+  const data = await res.json();
+
+  if (data.ok) {
+    status.textContent = "Cookies uploaded successfully.";
+    status.style.color = "lightgreen";
+  } else {
+    status.textContent = data.error || "Failed to upload cookies.";
+    status.style.color = "red";
+  }
+}
+
+async function testYtdCookies() {
+  const status = document.getElementById("ytd_cookie_status");
+  status.textContent = "Testing authentication…";
+  status.style.color = "white";
+
+  const res = await fetch("/api/ytdlp/test");
+  const data = await res.json();
+
+  if (data.ok) {
+    status.textContent = "YouTube authentication OK.";
+    status.style.color = "lightgreen";
+  } else {
+    status.textContent = data.error || "Authentication failed.";
+    status.style.color = "red";
+  }
+}
+
+function openYtdHelp() {
+  const dlg = document.getElementById("ytd_help_modal");
+  if (!dlg) return;
+  if (typeof dlg.showModal === "function") dlg.showModal();
+}
+
+function closeYtdHelp() {
+  const dlg = document.getElementById("ytd_help_modal");
+  if (!dlg) return;
+  dlg.close();
+}
+
+// close help on backdrop click
+document.addEventListener("click", (e) => {
+  const dlg = document.getElementById("ytd_help_modal");
+  if (!dlg || !dlg.open) return;
+  const rect = dlg.getBoundingClientRect();
+  const inDialog =
+    e.clientX >= rect.left && e.clientX <= rect.right &&
+    e.clientY >= rect.top && e.clientY <= rect.bottom;
+  if (!inDialog) dlg.close();
+});
 
 loadSettings();
   </script>

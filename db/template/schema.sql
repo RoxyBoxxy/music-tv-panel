@@ -59,8 +59,7 @@ INSERT OR IGNORE INTO settings (key, value) VALUES
   ('ad_playlist', 'ads'),
   ('no_repeat_minutes', '20'),
   ('media_dir', './media'),
-  ('ytd_user', null),
-  ('ytd_pass', null),
+  ('ytd_cookies_path', NULL),
   ('lastFMKey', null),
   ('rtmp_enabled', 'false');
 

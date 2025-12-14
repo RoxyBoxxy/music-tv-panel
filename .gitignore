@@ -143,3 +143,4 @@ db/panel.sqlite
 db/panel.sqlite-shm
 db/panel.sqlite-wal
 overlay/*.txt
+cookies/youtube.txt

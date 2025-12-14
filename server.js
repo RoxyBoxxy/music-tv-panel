@@ -18,6 +18,8 @@ import bcrypt from "bcrypt";
 import { requireAuth, checkUserSetup } from "./libs/auth.js";
 import { fetchYearAndGenre } from "./libs/metaFetch.js";
 import fs from 'fs'
+import os from "os";
+import { spawn } from "child_process";
 
 const app = express();
 
@@ -94,7 +96,15 @@ async function ensureAndRebuildVideoFts({ rebuild = false } = {}) {
 }
 
 
-const upload = multer({ dest: "uploads/" });
+const COOKIES_DIR = path.join(process.cwd(), "cookies");
+if (!fs.existsSync(COOKIES_DIR)) {
+  fs.mkdirSync(COOKIES_DIR, { recursive: true });
+}
+
+const upload = multer({
+  dest: "uploads/",
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB max
+});
 
 // Initial user setup (runs only if no users exist)
 app.get("/setup-user", async (req, res) => {
@@ -548,6 +558,73 @@ app.post("/api/settings", requireAuth, upload.single("logo"), async (req, res) =
   }
 
   res.json({ ok: true });
+});
+
+// API: upload yt-dlp cookies.txt
+app.post("/api/ytdlp/cookies", requireAuth, upload.single("cookies"), async (req, res) => {
+  if (!req.file) {
+    return res.json({ ok: false, error: "No cookies file uploaded" });
+  }
+
+  const targetPath = path.join(COOKIES_DIR, "youtube.txt");
+
+  try {
+    fs.renameSync(req.file.path, targetPath);
+    fs.chmodSync(targetPath, 0o600);
+
+    const db = await dbPromise;
+    await db.run(
+      "INSERT INTO settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value",
+      "ytd_cookies_path",
+      targetPath
+    );
+
+    res.json({ ok: true });
+  } catch (e) {
+    console.error("cookies upload error", e);
+    res.json({ ok: false, error: e.message });
+  }
+});
+
+// API: test yt-dlp cookies authentication
+app.get("/api/ytdlp/test", requireAuth, async (req, res) => {
+  const db = await dbPromise;
+  const row = await db.get(
+    "SELECT value FROM settings WHERE key = ?",
+    "ytd_cookies_path"
+  );
+
+  if (!row || !row.value || !fs.existsSync(row.value)) {
+    return res.json({ ok: false, error: "No cookies file configured" });
+  }
+
+  const testUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+
+  const args = [
+    "--cookies", row.value,
+    "--skip-download",
+    "--no-warnings",
+    testUrl
+  ];
+
+  const proc = spawn("yt-dlp", args);
+
+  let stderr = "";
+
+  proc.stderr.on("data", (d) => {
+    stderr += d.toString();
+  });
+
+  proc.on("close", (code) => {
+    if (code === 0) {
+      res.json({ ok: true });
+    } else {
+      res.json({
+        ok: false,
+        error: stderr.trim() || `yt-dlp exited with code ${code}`
+      });
+    }
+  });
 });
 
 app.post("/api/ffmpeg/start",  (req, res) => {
