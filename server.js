@@ -17,6 +17,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { requireAuth, checkUserSetup } from "./libs/auth.js";
 import { fetchYearAndGenre } from "./libs/metaFetch.js";
+import { publishChannel } from "./libs/publish.js";
 import fs from 'fs'
 import os from "os";
 import { spawn } from "child_process";
@@ -647,6 +648,11 @@ const server = app.listen(PORT, () => {
 `);
   console.log("Running and listening on port", PORT);
   startScheduler();
+  const triggerPublish = () => {
+    publishChannel().catch((err) => console.error("publishChannel error", err));
+  };
+  triggerPublish();
+  setInterval(triggerPublish, 30 * 1000);
 
   // Build/maintain the search index now, then daily at 04:00 (UK time)
   ensureAndRebuildVideoFts({ rebuild: true })

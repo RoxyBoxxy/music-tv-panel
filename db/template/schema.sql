@@ -46,6 +46,10 @@ CREATE TABLE IF NOT EXISTS settings (
 );
 
 INSERT OR IGNORE INTO settings (key, value) VALUES
+  ('channelName', 'FluxTV'),
+  ('channelOwner', 'FluxTV'),
+  ('channelURL', 'http://localhost:4456'),
+  ('channelPublish', 'true'),
   ('ident_interval_minutes', '10'),
   ('ad_interval_minutes', '0'),
   ('default_fps', '24'),
