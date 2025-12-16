@@ -781,11 +781,11 @@ app.get("/api/ytdlp/test", requireAuth, async (req, res) => {
   });
 });
 
-app.post("/api/ffmpeg/start",  (req, res) => {
+app.post("/api/ffmpeg/start", requireAuth, (req, res) => {
   res.json({ ok: true, started: startMainFfmpegManually() });
 });
 
-app.post("/api/ffmpeg/stop",  (req, res) => {
+app.post("/api/ffmpeg/stop", requireAuth, (req, res) => {
   res.json({ ok: true, stopped: stopMainFfmpeg() });
 });
 
