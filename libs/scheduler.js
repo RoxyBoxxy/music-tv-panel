@@ -42,6 +42,7 @@ let ffmpegStats = {
   out_time: null,
   lastUpdate: null
 };
+const rtmp_enabled = settingsCache.rtmp_enabled === 'true';
 
 export function getFfmpegStats() {
   return ffmpegStats;
@@ -58,7 +59,7 @@ export function stopMainFfmpeg() {
   if (currentPusher) {
     try {
       currentPusher.kill("SIGTERM");
-    } catch {}
+    } catch { }
     currentPusher = null;
   }
 
@@ -224,7 +225,51 @@ function startMainFfmpeg() {
   if (mainFfmpeg) return;
 
   const inputUrl = "udp://127.0.0.1:554?fifo_size=5000000&overrun_nonfatal=1&timeout=0";
+  if (rtmp_enabled) {
+    const args = [
+      "-fflags", "+genpts+nobuffer",
+      "-analyzeduration", "0",
+      "-probesize", "32k",
+      "-i", inputUrl,
 
+      "-progress", "pipe:1",
+      "-stats_period", "1",
+
+      "-c:v", "copy",
+      "-c:a", "copy",
+      "-f", "flv",
+      settingsCache.output_rtmp_url,
+
+      "-c:v", "copy",
+      "-c:a", "copy",
+      "-f", "hls",
+      "-hls_time", "4",
+      "-hls_list_size", "8",
+      "-hls_flags", "delete_segments+append_list",
+      "-hls_segment_filename", "public/hls/segment_%03d.ts",
+      "public/hls/index.m3u8"
+    ];
+  }
+  else {
+    const args = [
+      "-fflags", "+genpts+nobuffer",
+      "-analyzeduration", "0",
+      "-probesize", "32k",
+      "-i", inputUrl,
+
+      "-progress", "pipe:1",
+      "-stats_period", "1",
+
+      "-c:v", "copy",
+      "-c:a", "copy",
+      "-f", "hls",
+      "-hls_time", "4",
+      "-hls_list_size", "8",
+      "-hls_flags", "delete_segments+append_list",
+      "-hls_segment_filename", "public/hls/segment_%03d.ts",
+      "public/hls/index.m3u8"
+    ];
+  }
   const args = [
     "-fflags", "+genpts+nobuffer",
     "-analyzeduration", "0",
@@ -313,7 +358,7 @@ function pushTrackToFifo(fullPath, durationSeconds) {
       "-filter_complex",
       " [0:v]scale=1280:720:force_original_aspect_ratio=decrease," +
       " pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=black," +
-      " fps="+ settingsCache.default_fps +",format=yuv420p,setsar=1[vmain];" +
+      " fps=" + settingsCache.default_fps + ",format=yuv420p,setsar=1[vmain];" +
 
       " [1:v]scale=140:-1[logo];" +
       " [vmain][logo]overlay=x=W-w-20:y=20[with_logo];" +

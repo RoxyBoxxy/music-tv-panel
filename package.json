@@ -1,11 +1,12 @@
 {
   "name": "FluxTV",
-  "version": "0.0.7",
+  "version": "1.0.1",
   "type": "module",
   "scripts": {
     "start": "node server.js",
     "dev:css": "npx tailwindcss -i ./public/tailwind.css -o ./public/styles.css",
-    "build": "npx esbuild ./src/main.js --bundle --outfile=./public/core.js",
+    "build:js": "npx esbuild ./src/app.js --bundle --minify --outfile=./public/app.js",
+    "build": "npm run build:js && npx tailwindcss -i ./public/tailwind.css -o ./public/styles.css && enmav --update-version && git push",
     "release": "standard-version",
     "build:asv": "enmav --update-version"
   },

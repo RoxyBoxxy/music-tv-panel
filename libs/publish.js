@@ -17,17 +17,18 @@ async function loadSettings() {
 
 export async function publishChannel() {
     await loadSettings();
-      const db = await dbPromise;
-  const row = await db.get(
-    "SELECT v.id, v.title, v.artist, v.year, v.genre, v.path " +
-    "FROM playout_log p JOIN videos v ON v.id = p.video_id " +
-    "ORDER BY p.id DESC LIMIT 1"
-  );
+    const db = await dbPromise;
+    const row = await db.get(
+        "SELECT v.id, v.title, v.artist, v.year, v.genre, v.path " +
+        "FROM playout_log p JOIN videos v ON v.id = p.video_id " +
+        "ORDER BY p.id DESC LIMIT 1"
+    );
     let data = qs.stringify({
         'nowPlaying': row.title + ' - ' + row.artist,
         'channelName': settingsCache.channelName,
         'channelURL': settingsCache.channelURL,
-        'channelOwner': settingsCache.channelOwner
+        'channelOwner': settingsCache.channelOwner,
+        'channelLogo': '/public/logo_nav.png'
     });
     let config = {
         method: 'post',

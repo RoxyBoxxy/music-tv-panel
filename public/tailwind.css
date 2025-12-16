@@ -22,3 +22,88 @@
 #addStatusLog:not(.hidden) {
   max-height: 60vh;
 }
+
+body {
+  text-rendering: geometricPrecision;
+}
+
+.nav-link {
+  position: relative;
+  padding-bottom: 0.15rem;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.2rem;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, #b36bff, #ff5edb);
+  transition: width 0.2s ease-out;
+  opacity: 0.9;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.feature-card {
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: radial-gradient(circle at top left, rgba(179, 107, 255, 0.18), rgba(10, 2, 25, 0.96));
+  padding: 1.25rem 1.4rem;
+  box-shadow: 0 0 30px rgba(43, 2, 80, 0.55);
+}
+
+.feature-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #e4d9ff;
+}
+
+.feature-body {
+  font-size: 0.85rem;
+  color: #d1c4f7;
+}
+
+.setup-step {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: flex-start;
+}
+
+.step-badge {
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 0, #ffe6ff, #b36bff);
+  color: #0b0215;
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(179, 107, 255, 0.7);
+}
+
+.step-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #f3e9ff;
+}
+
+.code-block {
+  margin-top: 0.45rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.9rem;
+  background: rgba(5, 0, 15, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  color: #f5e7ff;
+  overflow-x: auto;
+}

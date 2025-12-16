@@ -3,69 +3,81 @@
 
   <h1 class="text-3xl font-bold">TV Panel Settings</h1>
 
+  <div class="grid gap-8 lg:grid-cols-2">
+
     <!-- Site Settings -->
-  <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 space-y-4 max-w-xl">
-    <h2 class="text-xl font-semibold">Panel Settings</h2>
+  <div class="bg-black/40 border border-white/10 rounded-3xl p-6 space-y-4 shadow-[0_0_35px_rgba(12,3,24,0.65)] w-full">
+    <h2 class="text-2xl font-semibold text-white">Panel Settings</h2>
 
     <div class="space-y-2">
       <label class="block text-sm font-medium">Channel Name</label>
       <input id="channelName" type="text"
-        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500" />
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm" />
     </div>
 
     <div class="space-y-2">
       <label class="block text-sm font-medium">Channel Owner</label>
       <input id="channelOwner" type="text"
-        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500" />
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm" />
     </div>
     <div class="space-y-2">
       <label class="block text-sm font-medium">Channel URL</label>
       <input id="channelURL" type="text"
-        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500" />
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm" />
     </div>
-    <div class="flex items-center gap-2 pt-2">
-      <input id="channelPublish" type="checkbox"
-        class="h-4 w-4 rounded border-gray-600 bg-gray-900 text-pink-500 focus:ring-pink-500" />
-      <label for="channelPublish" class="text-sm font-medium">Publish Channel (public listing)</label>
+    <div class="space-y-2">
+      <label class="block text-sm font-medium">Channel Logo</label>
+      <input id="channelLogo" type="file"
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm file:bg-purple-600 file:text-white file:rounded-lg file:border-0 file:px-4 file:py-2 file:hover:bg-purple-700" />
     </div>
+    <label for="channelPublish" class="flex items-center justify-between gap-4 pt-2 cursor-pointer">
+      <span class="text-sm font-medium">Publish Channel (public listing)</span>
+      <span class="relative inline-flex items-center">
+        <input id="channelPublish" type="checkbox" class="toggle-input" />
+        <span class="toggle-track">
+          <span class="toggle-thumb"></span>
+        </span>
+      </span>
+    </label>
+
   </div>
 
   <!-- Idents / Ads -->
-  <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 space-y-4 max-w-xl">
-    <h2 class="text-xl font-semibold">Idents / Ads</h2>
+  <div class="bg-black/40 border border-white/10 rounded-3xl p-6 space-y-4 shadow-[0_0_35px_rgba(12,3,24,0.45)] w-full">
+    <h2 class="text-2xl font-semibold text-white">Idents / Ads</h2>
 
     <div class="space-y-2">
       <label class="block text-sm font-medium">Ident Interval (minutes)</label>
       <input id="ident_interval_minutes" type="number" min="0"
-        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500" />
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm" />
     </div>
 
     <div class="space-y-2">
       <label class="block text-sm font-medium">Ad Interval (minutes)</label>
       <input id="ad_interval_minutes" type="number" min="0"
-        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500" />
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm" />
     </div>
     <div class="space-y-2">
       <label class="block text-sm font-medium">No Repeat (minutes)</label>
       <input id="no_repeat_minutes" type="number" min="0"
-        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500" />
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm" />
     </div>
   </div>
 
   <!-- Media -->
-  <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 space-y-4 max-w-xl">
-    <h2 class="text-xl font-semibold">Last.fm API Key (get one from https://www.last.fm/api/account/create)</h2>
+  <div class="bg-black/40 border border-white/10 rounded-3xl p-6 space-y-4 shadow-[0_0_35px_rgba(12,3,24,0.45)] w-full">
+    <h2 class="text-2xl font-semibold text-white">Last.fm API Key (get one from https://www.last.fm/api/account/create)</h2>
 
     <div class="space-y-2">
       <label class="block text-sm font-medium">API Key</label>
       <input id="lastFMKey" type="text"
-        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500" />
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm" />
     </div>
   </div>
 
   <!-- YouTube Authentication -->
-  <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 space-y-4 max-w-xl">
-    <h2 class="text-xl font-semibold">YouTube Authentication</h2>
+  <div class="bg-black/40 border border-white/10 rounded-3xl p-6 space-y-4 shadow-[0_0_35px_rgba(12,3,24,0.45)] w-full">
+    <h2 class="text-2xl font-semibold text-white">YouTube Authentication</h2>
 
     <p class="text-sm text-gray-300">
       Some YouTube videos require a logged-in session.
@@ -76,35 +88,33 @@
     <div class="space-y-2">
       <label class="block text-sm font-medium">cookies.txt file</label>
       <input id="ytd_cookies_file" type="file" accept=".txt"
-        class="w-full text-gray-200 file:bg-purple-600 file:text-white
-               file:rounded-md file:border-0 file:px-4 file:py-2
-               file:hover:bg-purple-700" />
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 file:bg-purple-600 file:text-white file:rounded-lg file:border-0 file:px-4 file:py-2 file:hover:bg-purple-700" />
     </div>
 
     <div class="flex flex-wrap gap-3">
       <button type="button" onclick="uploadYtdCookies()"
-        class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-md transition">
+        class="inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 text-sm font-semibold shadow-neon hover:brightness-110 transition">
         Upload Cookies
       </button>
 
       <button type="button" onclick="testYtdCookies()"
-        class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md transition">
+        class="px-4 py-2.5 rounded-xl border border-white/10 bg-black/60 text-sm text-purple-100 hover:bg-purple-900/40 transition">
         Test Authentication
       </button>
 
-      <button type="button" onclick="openYtdHelp()"
-        class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-md border border-gray-600 transition">
+      <button type="button" id="ytd_help_open"
+        class="px-4 py-2.5 rounded-xl border border-white/10 bg-black/50 text-sm text-purple-100 hover:bg-purple-900/30 transition">
         Help
       </button>
     </div>
 
     <div id="ytd_cookie_status" class="text-sm"></div>
-    <dialog id="ytd_help_modal" class="bg-transparent">
-      <div class="w-full max-w-2xl bg-gray-900 text-gray-100 rounded-lg border border-gray-700 shadow-xl p-6">
+    <dialog id="ytd_help_modal" class="bg-transparent max-w-4xl w-full p-0">
+      <div class="w-full bg-black/90 text-gray-100 rounded-3xl border border-white/10 shadow-[0_0_50px_rgba(11,0,20,0.8)] p-6">
         <div class="flex items-start justify-between gap-4">
           <h3 class="text-lg font-semibold">How to export YouTube cookies</h3>
-          <button type="button" onclick="closeYtdHelp()"
-            class="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 rounded border border-gray-600">
+          <button type="button" id="ytd_help_close"
+            class="px-3 py-1.5 rounded-full border border-white/10 bg-black/60 hover:bg-purple-900/40 transition text-sm">
             Close
           </button>
         </div>
@@ -115,7 +125,7 @@
             FluxTV does <strong>not</strong> store your password — it only uses a cookies.txt file you export.
           </p>
 
-          <div class="bg-gray-800 border border-gray-700 rounded p-4 space-y-3">
+          <div class="bg-black/40 border border-white/10 rounded-2xl p-4 space-y-3">
             <h4 class="font-semibold">Firefox (recommended)</h4>
             <ol class="list-decimal pl-5 space-y-1">
               <li>Install the <strong>cookies.txt</strong> extension from Firefox Add-ons.</li>
@@ -126,7 +136,7 @@
             </ol>
           </div>
 
-          <div class="bg-gray-800 border border-gray-700 rounded p-4 space-y-3">
+          <div class="bg-black/40 border border-white/10 rounded-2xl p-4 space-y-3">
             <h4 class="font-semibold">Chrome / Chromium</h4>
             <ol class="list-decimal pl-5 space-y-1">
               <li>Install a <strong>cookies.txt exporter</strong> extension (e.g. “Get cookies.txt”).</li>
@@ -136,7 +146,7 @@
             </ol>
           </div>
 
-          <div class="bg-gray-800 border border-gray-700 rounded p-4 space-y-2">
+          <div class="bg-black/40 border border-white/10 rounded-2xl p-4 space-y-2">
             <h4 class="font-semibold">Troubleshooting</h4>
             <ul class="list-disc pl-5 space-y-1 text-gray-300">
               <li>If Test Authentication fails, re-export cookies and try again.</li>
@@ -154,13 +164,13 @@
   </div>
 
   <!-- Video Output Settings -->
-  <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 space-y-4 max-w-xl">
-    <h2 class="text-xl font-semibold">Video Output Settings</h2>
+  <div class="bg-black/40 border border-white/10 rounded-3xl p-6 space-y-4 shadow-[0_0_35px_rgba(12,3,24,0.45)] w-full">
+    <h2 class="text-2xl font-semibold text-white">Video Output Settings</h2>
 
     <div class="space-y-2">
       <label class="block text-sm font-medium">FPS</label>
       <select id="default_fps"
-        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500">
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm">
         <option value="24">24</option>
         <option value="25">25</option>
         <option value="30">30</option>
@@ -172,7 +182,7 @@
     <div class="space-y-2">
       <label class="block text-sm font-medium">Resolution</label>
       <select id="default_resolution"
-        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500">
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm">
         <option value="854x480">854×480</option>
         <option value="1280x720">1280×720</option>
         <option value="1920x1080">1920×1080</option>
@@ -182,7 +192,7 @@
     <div class="space-y-2">
       <label class="block text-sm font-medium">Video Bitrate</label>
       <select id="bitrate_video"
-        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500">
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm">
         <option value="1500k">1500k</option>
         <option value="2500k">2500k</option>
         <option value="5000k">5000k</option>
@@ -193,7 +203,7 @@
     <div class="space-y-2">
       <label class="block text-sm font-medium">Audio Bitrate</label>
       <select id="bitrate_audio"
-        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500">
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm">
         <option value="96k">96k</option>
         <option value="128k">128k</option>
         <option value="160k">160k</option>
@@ -204,7 +214,7 @@
     <div class="space-y-2">
       <label class="block text-sm font-medium">Video Buffer Size</label>
       <select id="buffer_size"
-        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500">
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm">
         <option value="5000k">5000k</option>
         <option value="10000k">10000k</option>
         <option value="20000k">20000k</option>
@@ -214,27 +224,105 @@
     <div class="space-y-2">
       <label class="block text-sm font-medium">Logo</label>
       <input id="logo" type="file"
-        class="w-full text-gray-200 file:bg-purple-600 file:text-white file:rounded-md file:border-0 file:px-4 file:py-2 file:hover:bg-purple-700" />
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 file:bg-purple-600 file:text-white file:rounded-lg file:border-0 file:px-4 file:py-2 file:hover:bg-purple-700" />
     </div>
   </div>
 
   <!-- Output Stream -->
-  <div class="bg-gray-800 p-6 rounded-lg border border-gray-700 space-y-4 max-w-xl">
-    <h2 class="text-xl font-semibold">Output Stream</h2>
+  <div class="bg-black/40 border border-white/10 rounded-3xl p-6 space-y-4 shadow-[0_0_35px_rgba(12,3,24,0.45)] w-full">
+    <h2 class="text-2xl font-semibold text-white">Output Stream</h2>
+
+    <label for="enable_rtmp" class="flex items-center justify-between gap-4 cursor-pointer">
+      <span class="text-sm font-medium">Enable RTMP Output</span>
+      <span class="relative inline-flex items-center">
+        <input id="enable_rtmp" type="checkbox" class="toggle-input" />
+        <span class="toggle-track">
+          <span class="toggle-thumb"></span>
+        </span>
+      </span>
+    </label>
 
     <div class="space-y-2">
       <label class="block text-sm font-medium">RTMP Output URL</label>
       <input id="output_rtmp_url" type="text"
-        class="w-full px-3 py-2 bg-gray-900 border border-gray-700 rounded focus:ring-2 focus:ring-pink-500" />
+        class="w-full px-4 py-2.5 bg-black/70 border border-white/10 rounded-xl focus:ring-2 focus:ring-purple-500 focus:outline-none text-sm" />
     </div>
   </div>
 
-  <button onclick="saveSettings()"
-    class="px-5 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-md transition">
-    Save Settings
-  </button>
+  </div>
 
-  <div id="status" class="mt-4 text-lg"></div>
+  <div class="sticky bottom-6 left-0 -ml-4">
+    <div class="flex items-center gap-4">
+      <button onclick="saveSettings()"
+        class="inline-flex items-center justify-center px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 text-sm font-semibold shadow-neon hover:brightness-110 transition">
+        Save Settings
+      </button>
+      <div id="status" class="text-base text-purple-200"></div>
+    </div>
+  </div>
+
+  <div id="notifications" class="fixed bottom-6 right-6 z-40 space-y-3 pointer-events-none"></div>
+
+  <style>
+  .toggle-input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  .toggle-track {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 3rem;
+    height: 1.5rem;
+    border-radius: 9999px;
+    background-color: #374151;
+    transition: background-color 200ms ease;
+  }
+  .toggle-thumb {
+    position: absolute;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 9999px;
+    background-color: #fff;
+    left: 0.125rem;
+    top: 0.125rem;
+    transition: transform 200ms ease;
+  }
+  .toggle-input:checked + .toggle-track {
+    background-color: #ec4899;
+  }
+  .toggle-input:checked + .toggle-track .toggle-thumb {
+    transform: translateX(1.5rem);
+  }
+  .toggle-input:focus-visible + .toggle-track {
+    box-shadow: 0 0 0 2px rgba(236, 72, 153, 0.5);
+  }
+  #notifications .toast {
+    pointer-events: auto;
+    min-width: 220px;
+    border-radius: 9999px;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+    opacity: 0;
+    transform: translateX(1.5rem);
+    transition: opacity 200ms ease, transform 200ms ease;
+    box-shadow: 0 0 35px rgba(10, 0, 20, 0.55);
+  }
+  #notifications .toast-show {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .toast-success {
+    background: linear-gradient(135deg, rgba(86, 229, 170, 0.95), rgba(91, 241, 198, 0.8));
+  }
+  .toast-error {
+    background: linear-gradient(135deg, rgba(244, 63, 94, 0.95), rgba(251, 113, 133, 0.85));
+  }
+  </style>
 
   <script>
 async function loadSettings() {
@@ -256,6 +344,7 @@ async function loadSettings() {
   document.getElementById("bitrate_video").value = s.bitrate_video || "";
   document.getElementById("bitrate_audio").value = s.bitrate_audio || "";
   document.getElementById("buffer_size").value = s.buffer_size || "";
+  document.getElementById("enable_rtmp").checked = s.enable_rtmp === "true";
   document.getElementById("output_rtmp_url").value = s.output_rtmp_url || "";
 }
 
@@ -275,6 +364,7 @@ async function saveSettings() {
   form.append("bitrate_video", document.getElementById("bitrate_video").value);
   form.append("bitrate_audio", document.getElementById("bitrate_audio").value);
   form.append("buffer_size", document.getElementById("buffer_size").value);
+  form.append("enable_rtmp", document.getElementById("enable_rtmp").checked ? "true" : "false");
   form.append("output_rtmp_url", document.getElementById("output_rtmp_url").value);
 
   const logoInput = document.getElementById("logo");
@@ -282,20 +372,28 @@ async function saveSettings() {
     form.append("logo", logoInput.files[0]);
   }
 
-  const res = await fetch("/api/settings", {
-    method: "POST",
-    body: form
-  });
-
-  const data = await res.json();
   const status = document.getElementById("status");
+  try {
+    const res = await fetch("/api/settings", {
+      method: "POST",
+      body: form
+    });
 
-  if (data.ok) {
-    status.innerText = "Saved successfully!";
-    status.style.color = "lightgreen";
-  } else {
+    const data = await res.json();
+
+    if (data.ok) {
+      status.innerText = "Saved successfully!";
+      status.style.color = "lightgreen";
+      showToast("Settings saved successfully.");
+    } else {
+      status.innerText = "Error saving settings.";
+      status.style.color = "red";
+      showToast(data.error || "Error saving settings.", "error");
+    }
+  } catch (e) {
     status.innerText = "Error saving settings.";
     status.style.color = "red";
+    showToast("Network error saving settings.", "error");
   }
 }
 
@@ -328,6 +426,22 @@ async function uploadYtdCookies() {
   }
 }
 
+function showToast(message, type = "success") {
+  const container = document.getElementById("notifications");
+  if (!container) return;
+  const toast = document.createElement("div");
+  toast.className = "toast " + (type === "error" ? "toast-error" : "toast-success");
+  toast.textContent = message;
+  container.appendChild(toast);
+  requestAnimationFrame(() => {
+    toast.classList.add("toast-show");
+  });
+  setTimeout(() => {
+    toast.classList.remove("toast-show");
+    setTimeout(() => toast.remove(), 250);
+  }, 3500);
+}
+
 async function testYtdCookies() {
   const status = document.getElementById("ytd_cookie_status");
   status.textContent = "Testing authentication…";
@@ -345,28 +459,37 @@ async function testYtdCookies() {
   }
 }
 
-function openYtdHelp() {
-  const dlg = document.getElementById("ytd_help_modal");
-  if (!dlg) return;
-  if (typeof dlg.showModal === "function") dlg.showModal();
+const ytdHelpModal = document.getElementById("ytd_help_modal");
+const ytdHelpOpenBtn = document.getElementById("ytd_help_open");
+const ytdHelpCloseBtn = document.getElementById("ytd_help_close");
+
+if (ytdHelpOpenBtn && ytdHelpModal) {
+  ytdHelpOpenBtn.addEventListener("click", () => {
+    if (!ytdHelpModal.open) {
+      ytdHelpModal.showModal();
+    }
+  });
 }
 
-function closeYtdHelp() {
-  const dlg = document.getElementById("ytd_help_modal");
-  if (!dlg) return;
-  dlg.close();
+if (ytdHelpCloseBtn && ytdHelpModal) {
+  ytdHelpCloseBtn.addEventListener("click", () => {
+    if (ytdHelpModal.open) {
+      ytdHelpModal.close();
+    }
+  });
 }
 
-// close help on backdrop click
-document.addEventListener("click", (e) => {
-  const dlg = document.getElementById("ytd_help_modal");
-  if (!dlg || !dlg.open) return;
-  const rect = dlg.getBoundingClientRect();
-  const inDialog =
-    e.clientX >= rect.left && e.clientX <= rect.right &&
-    e.clientY >= rect.top && e.clientY <= rect.bottom;
-  if (!inDialog) dlg.close();
-});
+if (ytdHelpModal) {
+  ytdHelpModal.addEventListener("click", (e) => {
+    const rect = ytdHelpModal.getBoundingClientRect();
+    const inDialog =
+      e.clientX >= rect.left && e.clientX <= rect.right &&
+      e.clientY >= rect.top && e.clientY <= rect.bottom;
+    if (!inDialog) {
+      ytdHelpModal.close();
+    }
+  });
+}
 
 loadSettings();
   </script>

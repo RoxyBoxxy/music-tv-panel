@@ -19,51 +19,52 @@
     </form>
     <!-- Add Video Status Modal -->
     <dialog id="addStatusModal"
-      class="backdrop:bg-black backdrop:bg-opacity-70 rounded-lg p-6 bg-gray-800 text-gray-100 w-[500px] border border-gray-700"
+      class="backdrop:bg-black/70 rounded-3xl p-0 bg-transparent text-gray-100 w-[500px] border-0"
       style="margin:auto;">
+      <div class="border border-white/10 rounded-3xl p-6 shadow-[0_0_55px_rgba(10,0,20,0.9)]" style="background-color: rgba(10, 4, 22, 0.95);">
+        <h3 class="text-2xl font-semibold text-white mb-4">Adding Videos…</h3>
 
-      <h3 class="text-xl font-bold mb-4">Adding Videos…</h3>
+        <div id="addMeta" class="flex gap-4 items-center mb-4 hidden">
+          <img
+            id="addMetaThumb"
+            class="w-24 h-24 rounded-2xl object-cover bg-black/60 border border-white/10 shadow-[0_0_25px_rgba(15,0,25,0.4)]"
+            src=""
+            alt="Thumbnail"
+          />
 
-      <div id="addMeta" class="flex gap-4 items-center mb-4 hidden">
-        <img
-          id="addMetaThumb"
-          class="w-24 h-24 rounded object-cover bg-gray-900 border border-gray-700"
-          src=""
-          alt="Thumbnail"
-        />
-
-        <div class="flex flex-col">
-          <div id="addMetaArtist" class="text-lg font-semibold text-white"></div>
-          <div id="addMetaTrack" class="text-sm text-gray-300"></div>
-        </div>
-      </div>
-
-      <div class="space-y-3">
-        <div id="addStatusText" class="text-sm text-gray-300">
-          Waiting…
+          <div class="flex flex-col">
+            <div id="addMetaArtist" class="text-lg font-semibold text-white"></div>
+            <div id="addMetaTrack" class="text-sm text-gray-300"></div>
+          </div>
         </div>
 
-        <div class="w-full bg-gray-700 rounded h-3 overflow-hidden">
-          <div id="addStatusBar"
-               class="bg-purple-500 h-3 transition-all duration-200"
-               style="width: 0%"></div>
+        <div class="space-y-3">
+          <div id="addStatusText" class="text-sm text-purple-100">
+            Waiting…
+          </div>
+
+          <div class="w-full bg-black/40 border border-white/10 rounded-full h-3 overflow-hidden">
+            <div id="addStatusBar"
+                 class="bg-purple-500 h-3 transition-all duration-200"
+                 style="width: 0%"></div>
+          </div>
+
+          <pre id="addStatusLog"
+               class="hidden p-3 bg-black/60 border border-white/10 rounded-xl text-xs text-purple-100 overflow-auto h-60"></pre>
         </div>
 
-        <pre id="addStatusLog"
-             class="hidden p-3 bg-gray-900 border border-gray-700 rounded text-xs overflow-auto h-60"></pre>
-      </div>
+        <div class="flex justify-end mt-4">
+          <div class="flex gap-3">
+            <button id="addStatusToggleLog"
+              class="px-3 py-2.5 rounded-xl border border-white/10 bg-black/60 text-sm text-purple-100 hover:bg-purple-900/40 transition">
+              Show log
+            </button>
 
-      <div class="flex justify-end mt-4">
-        <div class="flex gap-3">
-          <button id="addStatusToggleLog"
-            class="px-3 py-2 bg-gray-700 hover:bg-gray-600 rounded text-white text-sm">
-            Show log
-          </button>
-
-          <button id="addStatusClose"
-            class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded text-white">
-            Close
-          </button>
+            <button id="addStatusClose"
+              class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 text-sm font-semibold shadow-neon hover:brightness-110 transition text-white">
+              Close
+            </button>
+          </div>
         </div>
       </div>
     </dialog>
@@ -84,18 +85,20 @@
 
     <!-- Native dialog modal -->
     <dialog id="videoModal"
-      class="backdrop:bg-black backdrop:bg-opacity-70 rounded-lg p-6 bg-gray-800 text-gray-100 w-[400px] border border-gray-700 hidden"
+      class="backdrop:bg-black/70 rounded-3xl p-0 bg-transparent text-gray-100 w-[420px] hidden border-0"
       style="display:none;">
-      <h3 id="videoModalTitle" class="text-xl font-bold mb-4">Modal</h3>
+      <div class="border border-white/10 rounded-3xl p-6 shadow-[0_0_55px_rgba(10,0,20,0.9)]" style="background-color: rgba(10, 4, 22, 0.95);">
+        <h3 id="videoModalTitle" class="text-2xl font-semibold mb-4 text-white">Modal</h3>
 
-      <div id="videoModalContent" class="text-gray-200 mb-6">
-        <!-- JS injects edit/delete content here -->
-      </div>
+        <div id="videoModalContent" class="text-gray-200 mb-6">
+          <!-- JS injects edit/delete content here -->
+        </div>
 
-      <div class="flex justify-end gap-3">
-        <button id="videoModalCancel" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">Cancel</button>
+        <div class="flex justify-end gap-3">
+          <button id="videoModalCancel" class="px-4 py-2.5 rounded-xl border border-white/10 bg-black/60 text-sm text-purple-100 hover:bg-purple-900/40 transition">Cancel</button>
 
-        <button id="videoModalConfirm" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded">Confirm</button>
+          <button id="videoModalConfirm" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 text-sm font-semibold shadow-neon hover:brightness-110 transition text-white">Confirm</button>
+        </div>
       </div>
     </dialog>
 
@@ -152,21 +155,21 @@
   </section>
 
   <!-- Modal Lightbox -->
-  <div id="modalOverlay" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+  <div id="modalOverlay" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50">
 
-    <div id="modalBox" class="bg-gray-800 border border-gray-700 rounded-lg p-6 w-full max-w-lg shadow-xl">
+    <div id="modalBox" class="border border-white/10 rounded-3xl p-6 w-full max-w-lg shadow-[0_0_55px_rgba(10,0,20,0.9)]" style="background-color: rgba(10, 4, 22, 0.95);">
 
-      <h2 id="modalTitle" class="text-2xl font-bold mb-4">Modal</h2>
+      <h2 id="modalTitle" class="text-2xl font-bold mb-4 text-white">Modal</h2>
 
       <div id="modalContent" class="text-gray-200 mb-6">
         <!-- dashboard.js will inject form or confirmation UI here -->
       </div>
       <div class="flex justify-end gap-3">
-        <button id="modalCancel" class="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded">
+        <button id="modalCancel" class="px-4 py-2.5 rounded-xl border border-white/10 bg-black/60 text-sm text-purple-100 hover:bg-purple-900/40 transition">
           Cancel
         </button>
 
-        <button id="modalConfirm" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded">
+        <button id="modalConfirm" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-500 text-sm font-semibold shadow-neon hover:brightness-110 transition text-white">
           Confirm
         </button>
       </div>
@@ -207,8 +210,6 @@
       videoModal.showModal();
     };
   </script>
- <script src="/public/media.js"></script>
-      <script src="/public/add.js"></script>
 
   </div>
   ` }) %>
